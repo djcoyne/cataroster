@@ -5,122 +5,122 @@ import classes
 
 class Character:
   def __init__(self, name, cl, spec, **kwargs):
-    n = name
-    c = cl
-    s = spec
-    a = None
+    self.n = name
+    self.c = cl
+    self.s = spec
+    self.a = None
 
-    if c=='Death Knight':
-      if s=='Blood':
+    if self.c=='Death Knight':
+      if self.s=='Blood':
         if 'role' in kwargs:
-          r = kwargs.get('role')
-          a=classes.DKBlood(role=r)
+          self.r = kwargs.get('role')
+          self.a=classes.DKBlood(role=self.r)
         else:
-          a=classes.DKBlood()
-      elif s=='Frost':
-        a=classes.DKFrost()
-      elif s=='Unholy':
-        a=classes.DKUnholy()
+          self.a=classes.DKBlood()
+      elif self.s=='Frost':
+        self.a=classes.DKFrost()
+      elif self.s=='Unholy':
+        self.a=classes.DKUnholy()
       else:
-        print("Invalid Class/Spec Pairing")    
-        
-    elif c=='Druid':
-      if s=='Feral':
+        print("Invalid Class/Spec Pairing")
+           
+    elif self.c=='Druid':
+      if self.s=='Feral':
         if 'role' in kwargs:
-          r = kwargs.get('role')
-          a=classes.DrFeral(role=r)
+          self.r = kwargs.get('role')
+          self.a=classes.DrFeral(role=self.r)
         else:
-          a=classes.DrFeral()
-      elif s=='Balance':
-        a=classes.DrBalance()
-      elif s=='Restoration':
-        a=classes.DrResto()
-      else:
-        print("Invalid Class/Spec Pairing")       
-
-    elif c=='Hunter':
-      if s=='BM':
-        a=classes.HBM()
-      elif s=='Marksmanship':
-        a=classes.HMarks()
-      elif s=='Survival':
-        a=classes.HSurv()
-      else:
-        print("Invalid Class/Spec Pairing")       
-
-    elif c=='Mage':
-      if s=='Arcane':
-        a=classes.MArcane()
-      elif s=='Fire':
-        a=classes.MFire()
-      elif s=='Frost':
-        a=classes.MFrost()
-      else:
-        print("Invalid Class/Spec Pairing")      
-
-    elif c=='Paladin':
-      if s=='Protection':
-        a=classes.PalProt()
-      elif s=='Holy':
-        a=classes.PalHoly()
-      elif s=='Retribution':
-        a=classes.PalRet()
-      else:
-        print("Invalid Class/Spec Pairing")        
-
-    elif c=='Priest':
-      if s=='Discipline':
-        a=classes.PrDisc()
-      elif s=='Holy':
-        a=classes.PrHoly()
-      elif s=='Shadow':
-        a=classes.PrShadow()
-      else:
-        print("Invalid Class/Spec Pairing")        
-
-    elif c=='Rogue':
-      if s=='Assassination':
-        a=classes.RAss()
-      elif s=='Combat':
-        a=classes.RCombat()
-      elif s=='Subtlety':
-        a=classes.RSubtlety()
-      else:
-        print("Invalid Class/Spec Pairing")       
-
-    elif c=='Shaman':
-      if s=='Enhancement':
-        a=classes.SEnhance()
-      elif s=='Elemental':
-        a=classes.SElemental()
-      elif s=='Restoration':
-        a=classes.SResto()
+          self.a=classes.DrFeral()
+      elif self.s=='Balance':
+        self.a=classes.DrBalance()
+      elif self.s=='Restoration':
+        self.a=classes.DrResto()
       else:
         print("Invalid Class/Spec Pairing") 
 
-    elif c=='Warlock':
-      if s=='Affliction':
-        a=classes.WkAff()
-      elif s=='Demonology':
-        a=classes.WkDemo()
-      elif s=='Destruction':
-        a=classes.WkDestro()
+    elif self.c=='Hunter':
+      if self.s=='BM':
+        self.a=classes.HBM()
+      elif self.s=='Marksmanship':
+        self.a=classes.HMarks()
+      elif self.s=='Survival':
+        self.a=classes.HSurv()
       else:
-        print("Invalid Class/Spec Pairing")        
-
-    elif c=='Warrior':
-      if s=='Arms':
-        a=classes.WaArms()
-      elif s=='Fury':
-        a=classes.WaFury()
-      elif s=='Protection':
-        a=classes.WaProt()
+        print("Invalid Class/Spec Pairing")
+        
+    elif self.c=='Mage':
+      if self.s=='Arcane':
+        self.a=classes.MArcane()
+      elif self.s=='Fire':
+        self.a=classes.MFire()
+      elif self.s=='Frost':
+        self.a=classes.MFrost()
+      else:
+        print("Invalid Class/Spec Pairing")
+        
+    elif self.c=='Paladin':
+      if self.s=='Protection':
+        self.a=classes.PalProt()
+      elif self.s=='Holy':
+        self.a=classes.PalHoly()
+      elif self.s=='Retribution':
+        self.a=classes.PalRet()
+      else:
+        print("Invalid Class/Spec Pairing")
+        
+    elif self.c=='Priest':
+      if self.s=='Discipline':
+        self.a=classes.PrDisc()
+      elif self.s=='Holy':
+        self.a=classes.PrHoly()
+      elif self.s=='Shadow':
+        self.a=classes.PrShadow()
       else:
         print("Invalid Class/Spec Pairing")       
 
-    else:
-      print("Invalid Class")              
+    elif self.c=='Rogue':
+      if self.s=='Assassination':
+        self.a=classes.RAss()
+      elif self.s=='Combat':
+        self.a=classes.RCombat()
+      elif self.s=='Subtlety':
+        self.a=classes.RSubtlety()
+      else:
+        print("Invalid Class/Spec Pairing")    
 
+    elif self.c=='Shaman':
+      if self.s=='Enhancement':
+        self.a=classes.SEnhance()
+      elif self.s=='Elemental':
+        self.a=classes.SElemental()
+      elif self.s=='Restoration':
+        self.a=classes.SResto()
+      else:
+        print("Invalid Class/Spec Pairing")        
+
+    elif self.c=='Warlock':
+      if self.s=='Affliction':
+        self.a=classes.WkAff()
+      elif self.s=='Demonology':
+        self.a=classes.WkDemo()
+      elif self.s=='Destruction':
+        self.a=classes.WkDestro()
+      else:
+        print("Invalid Class/Spec Pairing")
+        
+    elif self.c=='Warrior':
+      if self.s=='Arms':
+        self.a=classes.WaArms()
+      elif self.s=='Fury':
+        self.a=classes.WaFury()
+      elif self.s=='Protection':
+        self.a=classes.WaProt()
+      else:
+        print("Invalid Class/Spec Pairing")
+      
+    else:
+      print("Invalid Class")
+    
   def buff_check(self):
     print(self.n+" provides "+ self.a.buffs)
 
@@ -132,12 +132,7 @@ class Player:
 
   def add_character(self, name, cl, spec, **kwargs):
     if 'role' in kwargs:
-      r = kwargs.get('role')
-      self.charlist.append(Character(name, cl, spec, role=r))
+      self.r = kwargs.get('role')
+      self.charlist.append(Character(name, cl, spec, role=self.r))
     else:
       self.charlist.append(Character(name, cl, spec))
-    
-      
-
-    
-    
