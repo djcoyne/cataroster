@@ -22,8 +22,7 @@ class Character:
       elif s=='Unholy':
         a=classes.DKUnholy()
       else:
-        print("Invalid Class/Spec Pairing")
-        
+        print("Invalid Class/Spec Pairing")    
         
     elif c=='Druid':
       if s=='Feral':
@@ -37,8 +36,7 @@ class Character:
       elif s=='Restoration':
         a=classes.DrResto()
       else:
-        print("Invalid Class/Spec Pairing")
-        
+        print("Invalid Class/Spec Pairing")       
 
     elif c=='Hunter':
       if s=='BM':
@@ -48,8 +46,7 @@ class Character:
       elif s=='Survival':
         a=classes.HSurv()
       else:
-        print("Invalid Class/Spec Pairing")
-        
+        print("Invalid Class/Spec Pairing")       
 
     elif c=='Mage':
       if s=='Arcane':
@@ -59,8 +56,7 @@ class Character:
       elif s=='Frost':
         a=classes.MFrost()
       else:
-        print("Invalid Class/Spec Pairing")
-        
+        print("Invalid Class/Spec Pairing")      
 
     elif c=='Paladin':
       if s=='Protection':
@@ -70,8 +66,7 @@ class Character:
       elif s=='Retribution':
         a=classes.PalRet()
       else:
-        print("Invalid Class/Spec Pairing")
-        
+        print("Invalid Class/Spec Pairing")        
 
     elif c=='Priest':
       if s=='Discipline':
@@ -81,8 +76,7 @@ class Character:
       elif s=='Shadow':
         a=classes.PrShadow()
       else:
-        print("Invalid Class/Spec Pairing")
-        
+        print("Invalid Class/Spec Pairing")        
 
     elif c=='Rogue':
       if s=='Assassination':
@@ -92,8 +86,7 @@ class Character:
       elif s=='Subtlety':
         a=classes.RSubtlety()
       else:
-        print("Invalid Class/Spec Pairing")
-        
+        print("Invalid Class/Spec Pairing")       
 
     elif c=='Shaman':
       if s=='Enhancement':
@@ -103,8 +96,7 @@ class Character:
       elif s=='Restoration':
         a=classes.SResto()
       else:
-        print("Invalid Class/Spec Pairing")
-        
+        print("Invalid Class/Spec Pairing") 
 
     elif c=='Warlock':
       if s=='Affliction':
@@ -114,8 +106,7 @@ class Character:
       elif s=='Destruction':
         a=classes.WkDestro()
       else:
-        print("Invalid Class/Spec Pairing")
-        
+        print("Invalid Class/Spec Pairing")        
 
     elif c=='Warrior':
       if s=='Arms':
@@ -125,20 +116,14 @@ class Character:
       elif s=='Protection':
         a=classes.WaProt()
       else:
-        print("Invalid Class/Spec Pairing")
-        
+        print("Invalid Class/Spec Pairing")       
 
     else:
-      print("Invalid Class")
-      
-  
-      
-    
+      print("Invalid Class")              
 
   def buff_check(self):
-    print(name+" provides "+ self.a.buffs)
-    
-    
+    print(self.n+" provides "+ self.a.buffs)
+
 
 class Player:
   def __init__(self, name, **kwargs):
