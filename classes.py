@@ -1,4 +1,5 @@
-""" This file contains the class and spec information for WoW Cata Classic
+""" 
+This file contains the class and spec information for WoW Cata Classic
 """
 
 """ 
@@ -12,22 +13,22 @@ class DeathKnight:
 class DKBlood(DeathKnight):
   def __init__(self, role='tank'):
     super().__init__()
-    self.r = role
-    self.sb = ['+10% to Attack Power','-10% Physical Damage Dealt Debuff']
+    r = role
+    sb = ['+10% to Attack Power','-10% Physical Damage Dealt Debuff']
     self.buffs.extend(sb)
 
 class DKFrost(DeathKnight):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+10% to Melee Attack Speed', '+4% Physical Damage Taken Debuff']
+    r = role
+    sb = ['+10% to Melee Attack Speed', '+4% Physical Damage Taken Debuff']
     self.buffs.extend(sb)
 
 class DKUnholy(DeathKnight):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+8% All Magic Damage Taken Debuff']
+    r = role
+    sb = ['+8% All Magic Damage Taken Debuff']
     self.buffs.extend(sb)
   
 """
@@ -41,22 +42,22 @@ class Druid:
 class DrFeral(Druid):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+5% to Critical Strike Chance','+30% Bleed Damage Taken Debuff','-20% Melee Attack Speed Debuff','-10% Physical Damage Dealt Debuff']
+    r = role
+    sb = ['+5% to Critical Strike Chance','+30% Bleed Damage Taken Debuff','-20% Melee Attack Speed Debuff','-10% Physical Damage Dealt Debuff']
     self.buffs.extend(sb)
 
 class DrBalance(Druid):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+5% to Spell Haste','+8% All Magic Damage Taken Debuff']
+    r = role
+    sb = ['+5% to Spell Haste','+8% All Magic Damage Taken Debuff']
     self.buffs.extend(sb)
 
 class DrResto(Druid):
   def __init__(self, role='heal'):
     super().__init__()
-    self.r = role
-    self.sb = ['Replenishment']
+    r = role
+    sb = ['Replenishment']
     self.buffs.extend(sb)
 
 """
@@ -70,22 +71,22 @@ class Hunter:
 class HBM(Hunter):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+3% to All Damage']
+    r = role
+    sb = ['+3% to All Damage']
     self.buffs.extend(sb)
 
 class HMarks(Hunter):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+10% to Attack Power']
+    r = role
+    sb = ['+10% to Attack Power']
     self.buffs.extend(sb)
 
 class HSurv(Hunter):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+10% to Melee Attack Speed']
+    r = role
+    sb = ['+10% to Melee Attack Speed']
     self.buffs.extend(sb)
 
 """
@@ -99,22 +100,22 @@ class Mage:
 class MArcane(Mage):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+3% to All Damage','-Casting Speed Debuff']
+    r = role
+    sb = ['+3% to All Damage','-Casting Speed Debuff']
     self.buffs.extend(sb)   
 
 class MFire(Mage):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+5% Critical Strike Chance for Spells Debuff']
+    r = role
+    sb = ['+5% Critical Strike Chance for Spells Debuff']
     self.buffs.extend(sb)
 
 class MFrost(Mage):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['Replenishment']
+    r = role
+    sb = ['Replenishment']
     self.buffs.extend(sb)
 
 """
@@ -128,22 +129,22 @@ class Paladin:
 class PalProt(Paladin):
   def __init__(self, role='tank'):
     super().__init__()
-    self.r = role
-    self.sb = ['-10% Physical Damage Dealt Debuff']
+    r = role
+    sb = ['-10% Physical Damage Dealt Debuff']
     self.buffs.extend(sb)
 
 class PalHoly(Paladin):
   def __init__(self, role='heal'):
     super().__init__()
-    self.r = role
-    self.sb = []
+    r = role
+    sb = []
     self.buffs.extend(sb)
 
 class PalRet(Paladin):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+3% to All Damage','Replenishment']
+    r = role
+    sb = ['+3% to All Damage','Replenishment']
     self.buffs.extend(sb)
 
 """
@@ -157,22 +158,22 @@ class Priest:
 class PrDisc(Priest):
   def __init__(self, role='heal'):
     super().__init__()
-    self.r = role
-    self.sb = []
+    r = role
+    sb = []
     self.buffs.extend(sb)
 
 class PrHoly(Priest):
   def __init__(self, role='heal'):
     super().__init__()
-    self.r = role
-    self.sb = []
+    r = role
+    sb = []
     self.buffs.extend(sb)
 
 class PrShadow(Priest):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+5% to Spell Haste','-Healing Effectiveness Debuff','Replenishment']
+    r = role
+    sb = ['+5% to Spell Haste','-Healing Effectiveness Debuff','Replenishment']
     self.buffs.extend(sb)
 
 """
@@ -186,22 +187,22 @@ class Rogue:
 class RAss(Rogue):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+8% All Magic Damage Taken Debuff']
+    r = role
+    sb = ['+8% All Magic Damage Taken Debuff']
     self.buffs.extend(sb)
 
 class RCombat(Rogue):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+4% Physical Damage Taken Debuff']
+    r = role
+    sb = ['+4% Physical Damage Taken Debuff']
     self.buffs.extend(sb)
 
 class RSubtlety(Rogue):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+5% to Critical Strike Chance','+30% Bleed Damage Taken Debuff']
+    r = role
+    sb = ['+5% to Critical Strike Chance','+30% Bleed Damage Taken Debuff']
     self.buffs.extend(sb)
 
 """
@@ -215,22 +216,22 @@ class Shaman:
 class SEnhance(Shaman):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+10% to Attack Power']
+    r = role
+    sb = ['+10% to Attack Power']
     self.buffs.extend(sb)
 
 class SElemental(Shaman):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+5% to Critical Strike Chance','Major Spellpower (10%)']
+    r = role
+    sb = ['+5% to Critical Strike Chance','Major Spellpower (10%)']
     self.buffs.extend(sb)
 
 class SResto(Shaman):
   def __init__(self, role='heal'):
     super().__init__()
-    self.r = role
-    self.sb = ['Major Mana Replenishment']
+    r = role
+    sb = ['Major Mana Replenishment']
     self.buffs.extend(sb)
 
 """
@@ -244,22 +245,22 @@ class Warlock:
 class WkAff(Warlock):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+Max Mana','Mana Per 5 (Mp5)']
+    r = role
+    sb = ['+Max Mana','Mana Per 5 (Mp5)']
     self.buffs.extend(sb)
 
 class WkDemo(Warlock):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['Major Spell Power (10%)','-Healing Effectiveness Debuff']
+    r = role
+    sb = ['Major Spell Power (10%)','-Healing Effectiveness Debuff']
     self.buffs.extend(sb)
 
 class WkDestro(Warlock):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+Stamina','+5% Critical Strike Chance for Spells Debuff','Replenishment']
+    r = role
+    sb = ['+Stamina','+5% Critical Strike Chance for Spells Debuff','Replenishment']
     self.buffs.extend(sb)
 
 """
@@ -273,20 +274,20 @@ class Warrior:
 class WaArms(Warrior):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+30% Bleed Damage Taken Debuff', '+4% Physical Damage Taken Debuff','-Healing Effectiveness Debuff']
+    r = role
+    sb = ['+30% Bleed Damage Taken Debuff', '+4% Physical Damage Taken Debuff','-Healing Effectiveness Debuff']
     self.buffs.extend(sb)
 
 class WaFury(Warrior):
   def __init__(self, role='dps'):
     super().__init__()
-    self.r = role
-    self.sb = ['+5% to Critical Strike Chance','-Healing Effectiveness Debuff']
+    r = role
+    sb = ['+5% to Critical Strike Chance','-Healing Effectiveness Debuff']
     self.buffs.extend(sb)
 
 class WaProt(Warrior):
   def __init__(self, role='tank'):
     super().__init__()
-    self.r = role
-    self.sb = ['-20% Melee Attack Speed Debuff']
+    r = role
+    sb = ['-20% Melee Attack Speed Debuff']
     self.buffs.extend(sb)
