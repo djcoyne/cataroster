@@ -223,7 +223,7 @@ class SElemental(Shaman):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    sb = ['+5% to Critical Strike Chance','Major Spellpower (10%)']
+    sb = ['+5% to Critical Strike Chance','Major Spell Power (10%)']
     self.buffs.extend(sb)
 
 class SResto(Shaman):
