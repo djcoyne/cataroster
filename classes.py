@@ -7,25 +7,28 @@ Death Knights
 class DeathKnight:
   def __init__(self):
     self.c = 'C41E3A'
-    self.buffs = []
+    self.buffs = ['Agility and Strength','10% Melee Attack Speed Debuff']
 
 class DKBlood(DeathKnight):
   def __init__(self, role='tank'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = ['10% AP',]
+    self.buffs.extend(sb)
 
 class DKFrost(DeathKnight):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class DKUnholy(DeathKnight):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
   
 """
 Druids
@@ -39,19 +42,22 @@ class DrFeral(Druid):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class DrBalance(Druid):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class DrResto(Druid):
   def __init__(self, role='heal'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 """
 Hunters
@@ -65,19 +71,22 @@ class HBM(Hunter):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class HMarks(Hunter):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class HSurv(Hunter):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 """
 Mages
@@ -91,19 +100,22 @@ class MArcane(Mage):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')    
+    self.sb = []
+    self.buffs.extend(sb)   
 
 class MFire(Mage):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class MFrost(Mage):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 """
 Paladins
@@ -117,19 +129,22 @@ class PalProt(Paladin):
   def __init__(self, role='tank'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class PalHoly(Paladin):
   def __init__(self, role='heal'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class PalRet(Paladin):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 """
 Priests
@@ -143,19 +158,22 @@ class PrDisc(Priest):
   def __init__(self, role='heal'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class PrHoly(Priest):
   def __init__(self, role='heal'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class PrShadow(Priest):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 """
 Rogues
@@ -169,19 +187,22 @@ class RAss(Rogue):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class RCombat(Rogue):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class RSubtlety(Rogue):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 """
 Shamans
@@ -195,19 +216,22 @@ class SEnhance(Shaman):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class SElemental(Shaman):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class SResto(Shaman):
   def __init__(self, role='heal'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 """
 Warlocks
@@ -221,19 +245,22 @@ class WkAff(Warlock):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class WkDemo(Warlock):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class WkDestro(Warlock):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 """
 Warriors
@@ -247,16 +274,19 @@ class WaArms(Warrior):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class WaFury(Warrior):
   def __init__(self, role='dps'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
 
 class WaProt(Warrior):
   def __init__(self, role='tank'):
     super().__init__()
     self.r = role
-    self.buffs.append('')
+    self.sb = []
+    self.buffs.extend(sb)
