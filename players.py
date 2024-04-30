@@ -4,138 +4,139 @@ This file defines a player class and the attributes/functions available for that
 import classes
 
 class Character:
-  def __init__(self, n, c, s, **kwargs):
-    name = n
-    class = c
-    spec = s
+  def __init__(self, name, cl, spec, **kwargs):
+    n = name
+    c = cl
+    s = spec
+    a = None
 
     if c=='Death Knight':
       if s=='Blood':
         if 'role' in kwargs:
-          r = role
-          a=DKBlood(role=r)
+          r = kwargs.get('role')
+          a=classes.DKBlood(role=r)
         else:
-          a=DKBlood()
+          a=classes.DKBlood()
       elif s=='Frost':
-        a=DKFrost()
+        a=classes.DKFrost()
       elif s=='Unholy':
-        a=DKUnholy()
+        a=classes.DKUnholy()
       else:
         print("Invalid Class/Spec Pairing")
-        break
+        
         
     elif c=='Druid':
       if s=='Feral':
         if 'role' in kwargs:
-          r = role
-          a=DrFeral(role=r)
+          r = kwargs.get('role')
+          a=classes.DrFeral(role=r)
         else:
-          a=DrFeral()
+          a=classes.DrFeral()
       elif s=='Balance':
-        a=DrBalance()
+        a=classes.DrBalance()
       elif s=='Restoration':
-        a=DrResto()
+        a=classes.DrResto()
       else:
         print("Invalid Class/Spec Pairing")
-        break
+        
 
     elif c=='Hunter':
       if s=='BM':
-        a=HBM()
+        a=classes.HBM()
       elif s=='Marksmanship':
-        a=HMarks()
+        a=classes.HMarks()
       elif s=='Survival':
-        a=HSurv()
+        a=classes.HSurv()
       else:
         print("Invalid Class/Spec Pairing")
-        break
+        
 
     elif c=='Mage':
       if s=='Arcane':
-        a=MArcane()
+        a=classes.MArcane()
       elif s=='Fire':
-        a=MFire()
+        a=classes.MFire()
       elif s=='Frost':
-        a=MFrost()
+        a=classes.MFrost()
       else:
         print("Invalid Class/Spec Pairing")
-        break
+        
 
     elif c=='Paladin':
       if s=='Protection':
-        a=PalProt()
+        a=classes.PalProt()
       elif s=='Holy':
-        a=PalHoly()
+        a=classes.PalHoly()
       elif s=='Retribution':
-        a=PalRet()
+        a=classes.PalRet()
       else:
         print("Invalid Class/Spec Pairing")
-        break
+        
 
     elif c=='Priest':
       if s=='Discipline':
-        a=PrDisc()
+        a=classes.PrDisc()
       elif s=='Holy':
-        a=PrHoly()
+        a=classes.PrHoly()
       elif s=='Shadow':
-        a=PrShadow()
+        a=classes.PrShadow()
       else:
         print("Invalid Class/Spec Pairing")
-        break
+        
 
     elif c=='Rogue':
       if s=='Assassination':
-        a=RAss()
+        a=classes.RAss()
       elif s=='Combat':
-        a=RCombat()
+        a=classes.RCombat()
       elif s=='Subtlety':
-        a=RSubtlety()
+        a=classes.RSubtlety()
       else:
         print("Invalid Class/Spec Pairing")
-        break
+        
 
     elif c=='Shaman':
       if s=='Enhancement':
-        a=SEnhance()
+        a=classes.SEnhance()
       elif s=='Elemental':
-        a=SElemental()
+        a=classes.SElemental()
       elif s=='Restoration':
-        a=SResto()
+        a=classes.SResto()
       else:
         print("Invalid Class/Spec Pairing")
-        break
+        
 
     elif c=='Warlock':
       if s=='Affliction':
-        a=WkAff()
+        a=classes.WkAff()
       elif s=='Demonology':
-        a=WkDemo()
+        a=classes.WkDemo()
       elif s=='Destruction':
-        a=WkDestro()
+        a=classes.WkDestro()
       else:
         print("Invalid Class/Spec Pairing")
-        break
+        
 
     elif c=='Warrior':
       if s=='Arms':
-        a=WaArms()
+        a=classes.WaArms()
       elif s=='Fury':
-        a=WaFury()
+        a=classes.WaFury()
       elif s=='Protection':
-        a=WaProt()
+        a=classes.WaProt()
       else:
         print("Invalid Class/Spec Pairing")
-        break
+        
 
     else:
       print("Invalid Class")
-      break
+      
   
       
     
 
   def buff_check(self):
-    print(name+" provides "+ a.buffs)
+    print(name+" provides "+ self.a.buffs)
     
     
 
@@ -144,12 +145,12 @@ class Player:
     self.name = name
     self.charlist = []
 
-  def add_character(self, name, class, spec, **kwargs):
+  def add_character(self, name, cl, spec, **kwargs):
     if 'role' in kwargs:
-      r = role
-      self.charlist.append(Character(name, class, spec, role=r))
+      r = kwargs.get('role')
+      self.charlist.append(Character(name, cl, spec, role=r))
     else:
-      self.charlist.append(Character(name, class, spec)
+      self.charlist.append(Character(name, cl, spec))
     
       
 
