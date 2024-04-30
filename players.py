@@ -122,7 +122,9 @@ class Character:
       print("Invalid Class")
     
   def buff_check(self):
-    print(self.n+" provides "+ self.a.buffs)
+    print(self.n+" provides:")
+    for x in self.a.buffs:
+      print(x)
 
 
 class Player:
