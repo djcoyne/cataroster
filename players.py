@@ -1,6 +1,16 @@
 """
 This file defines a player class and the attributes/functions available for that class
 """
+import classes
+
+class Character(Player):
+  
 
 class Player:
-  __init__
+  def __init__(self, name, character, **kwargs):
+    self.name = name
+    self.character
+      
+
+    
+    
