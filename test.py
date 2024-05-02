@@ -5,6 +5,7 @@ Created on Tue Apr 30 14:59:50 2024
 @author: CoyneDa
 """
 
+import tkinter as tk
 import players as p
 import pandas as pd
 
@@ -42,14 +43,68 @@ playerlist.append(Chelsea)
 
 
 availbuffs = []
+rosterlist = []
 for x in r:
     roster.loc[len(roster.index)] =[x.n, x.a.r, x.c, x.s]
     availbuffs.extend(x.a.buffs)
-    print(x.n)
-    
+    rosterlist.append(x.n) 
+
 availbuffs = set(availbuffs)
 missbuffs = pd.concat([raidbuffs,pd.DataFrame(availbuffs, columns=['Buff'])]).drop_duplicates(keep=False)
 
-print("Your raid is missing:")
-print(missbuffs.to_string(index=False, header=False))
+"""
+GUI section
+"""
+
+ui = tk.Tk()
+ui.state('zoomed')
+ui.configure(bg='gray')
+
+"""
+Draggables
+"""
+raider=[]
+dnd=[]
+i=0
+
+def drag(event):
+    x = event.x + event.widget.winfo_x()
+    y = event.y + event.widget.winfo_y()
+    event.widget.place(x=x, y=y, anchor="center")
+
+for x in r:
+    raider.append(tk.Label(ui,
+                        text=x.n + "; "+ x.s+" ("+x.a.r+")",
+                        bg=x.a.c,
+                        height=2,
+                        width=30
+                        ))
+    raider[-1].place(x=0+30*i, y = 0,anchor="center")
+    raider[-1].bind("<B1-Motion>", drag)
+    i+=i
+    
+"""
+Reset Button
+"""
+button = tk.Button(
+    text = "Reset",
+    width=7,
+    height=2,
+    bg='red',
+    fg='black'
+    )
+button.pack()
+
+"""
+Results Section
+"""
+
+m1 = tk.Label(text="Your raid is missing:")
+m2 = tk.Label(text=missbuffs.to_string(index=False, header=False))                           
+m1.pack()
+m2.pack()
+
+ui.mainloop()
+    
+
     
