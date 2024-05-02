@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ This file contains the class and spec information for WoW Cata Classic
 """
 
@@ -6,7 +7,7 @@ Death Knights
 """
 class DeathKnight:
   def __init__(self):
-    self.c = 'C41E3A'
+    self.c = '#C41E3A'
     self.buffs = ['+Strength and Agility','-20% Melee Attack Speed Debuff','-Casting Speed Debuff']
 
 class DKBlood(DeathKnight):
@@ -35,7 +36,7 @@ Druids
 """
 class Druid:
   def __init__(self):
-    self.c = 'FF7C0A'
+    self.c = '#FF7C0A'
     self.buffs = ['+5% to Strength, Agility, Intellect, and Stamina','-Armor Debuff','Combat Resurrection','Major Mana Replenishment']
 
 class DrFeral(Druid):
@@ -64,7 +65,7 @@ Hunters
 """
 class Hunter:
   def __init__(self):
-    self.c = 'AAD372'
+    self.c = '#AAD372'
     self.buffs = ['+Nature Resistance','-Healing Effectiveness Debuff']
     
 class HBM(Hunter):
@@ -93,7 +94,7 @@ Mages
 """
 class Mage:
   def __init__(self):
-    self.c = '3FC7EB'
+    self.c = '#3FC7EB'
     self.buffs = ['Bloodlust/Heroism/Time Warp','Minor Spell Power (6%)','+Max Mana']
 
 class MArcane(Mage):
@@ -122,7 +123,7 @@ Paladins
 """
 class Paladin:
   def __init__(self):
-    self.c = 'F48CBA'
+    self.c = '#F48CBA'
     self.buffs = ['+10% to Attack Power','+5% to Strength, Agility, Intellect, and Stamina','+Armor','+Fire Resistance','+Frost Resistance','+Shadow Resistance','Spell Pushback Protection','Mana Per 5 (Mp5)','-20% Melee Attack Speed Debuff']
 
 class PalProt(Paladin):
@@ -151,7 +152,7 @@ Priests
 """
 class Priest:
   def __init__(self):
-    self.c = 'FFFFFF'
+    self.c = '#FFFFFF'
     self.buffs = ['+Stamina','+Shadow Resistance','Major Mana Replenishment']
 
 class PrDisc(Priest):
@@ -180,7 +181,7 @@ Rogues
 """
 class Rogue:
   def __init__(self):
-    self.c = 'FFF468'
+    self.c = '#FFF468'
     self.buffs = ['-Armor Debuff','-Healing Effectiveness Debuff','-Casting Speed Debuff']
 
 class RAss(Rogue):
@@ -209,7 +210,7 @@ Shamans
 """
 class Shaman:
   def __init__(self):
-    self.c = '0070DD'
+    self.c = '#0070DD'
     self.buffs = ['Bloodlust/Heroism/Time Warp','+10% to Melee Attack Speed','+5% to Spell Haste', 'Minor Spell Power (6%)','+Strength and Agility','+Armor','+Fire Resistance','+Frost Resistance','+Nature Resistance','Spell Pushback Protection','Mana Per 5 (Mp5)','-20% Melee Attack Speed Debuff']
 
 class SEnhance(Shaman):
@@ -238,7 +239,7 @@ Warlocks
 """
 class Warlock:
   def __init__(self):
-    self.c = '8788EE'
+    self.c = '#8788EE'
     self.buffs = ['Combat Resurrection','+8% All Magic Damage Taken Debuff','-10% Physical Damage Dealt Debuff','-Casting Speed Debuff']
 
 class WkAff(Warlock):
@@ -267,7 +268,7 @@ Warriors
 """
 class Warrior:
   def __init__(self):
-    self.c = 'C69B6D'
+    self.c = '#C69B6D'
     self.buffs = ['+Strength and Agility','+Stamina','-Armor Debuff','-10% Physical Damage Dealt Debuff']
 
 class WaArms(Warrior):
