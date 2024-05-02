@@ -6,6 +6,7 @@ Created on Tue Apr 30 14:59:50 2024
 """
 
 import tkinter as tk
+import dragManager as dm
 import players as p
 import pandas as pd
 
@@ -59,18 +60,14 @@ GUI section
 ui = tk.Tk()
 ui.state('zoomed')
 ui.configure(bg='gray')
+ui.title(' Continental Breakfast Cata Roster Tool ')
 
 """
 Draggables
 """
 raider=[]
 dnd=[]
-i=0
-
-def drag(event):
-    x = event.x + event.widget.winfo_x()
-    y = event.y + event.widget.winfo_y()
-    event.widget.place(x=x, y=y, anchor="center")
+i=0    
 
 for x in r:
     raider.append(tk.Label(ui,
@@ -79,19 +76,21 @@ for x in r:
                         height=2,
                         width=30
                         ))
-    raider[-1].place(x=0+30*i, y = 0,anchor="center")
-    raider[-1].bind("<B1-Motion>", drag)
-    i+=i
+    raider[-1].place(x=200, y = 20+4*i,anchor="center")
+    dnd.append(dm.DragManager())
+    dnd[-1].add_draggable(raider[-1])
+    i+=10
     
 """
 Reset Button
 """
+
 button = tk.Button(
     text = "Reset",
     width=7,
     height=2,
     bg='red',
-    fg='black'
+    fg='black',
     )
 button.pack()
 
