@@ -5,12 +5,13 @@ Created on Tue Apr 30 14:59:50 2024
 @author: CoyneDa
 """
 
-import tkinter as tk
+from PyQt6.QtCore import QSize, Qt
+from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QHBoxLayout, QVBoxLayout, QFormLayout, QTabWidget, QWidget, QComboBox, QLineEdit, QLabel
 import dragManager as dm
 import players as p
 import pandas as pd
 import numpy as np
-
+import sys
 
 """
 This reads in a CSV with the current roster on it
@@ -37,22 +38,95 @@ r = []
 for x in players:
     r.append(x.charlist[0])
 
+""" 
+Define MainWindow subclass
+"""
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("CB Cata Roster Tool")
+
+        layout = QHBoxLayout()
+        
+        tabs = QTabWidget()
+        tabs.addTab(self.rosterTabUI(), "Roster")
+        tabs.addTab(self.addPATabUI(players), "Add PA")
+        tabs.addTab(self.manageRaidersTabUI(), "Manage Raiders")
+        layout.addWidget(tabs)
+        central = QWidget()
+        central.setLayout(layout)
+        self.setCentralWidget(central)
+
+    def rosterTabUI(self):
+        rosterTab = QWidget()
+        layout = QHBoxLayout()
+        layout.addWidget(QPushButton("Reset"))
+        rosterTab.setLayout(layout)
+        return rosterTab
+    
+    def addPATabUI(self, roster):
+        PATab = QWidget()
+        layout = QVBoxLayout()
+        self.cb = QComboBox()
+        for x in roster:
+            self.cb.addItem(x.name)
+        layout.addWidget(self.cb)
+        PATab.setLayout(layout)
+        return PATab
+    
+    def manageRaidersTabUI(self):
+        manageRaidersTab = QWidget()
+        layout = QVBoxLayout()
+        tabs = QTabWidget()
+        tabs.addTab(self.addRaider(), "Add Raider")
+        tabs.addTab(self.editRaider(), "Edit Raider")
+        tabs.addTab(self.removeRaider(players), "Remove Raider")
+        layout.addWidget(tabs)
+        manageRaidersTab.setLayout(layout)
+        return manageRaidersTab
+
+    def addRaider(self):
+        addRaiderTab = QWidget()
+        layout = QFormLayout()
+        layout.addRow(QLabel("Name: "), QLineEdit())
+        layout.addRow(QLabel("Class: "), QLineEdit())
+        layout.addRow(QLabel("Spec: "), QLineEdit())
+        addRaiderTab.setLayout(layout)
+        return addRaiderTab
+        
+    def editRaider(self):
+        editRaiderTab = QWidget()
+        layout = QFormLayout()
+        layout.addRow(("Name: "), QLineEdit())
+        layout.addRow(("Class: "), QLineEdit())
+        layout.addRow(("Spec: "), QLineEdit())
+        editRaiderTab.setLayout(layout)
+        return editRaiderTab
+        
+    def removeRaider(self, roster):
+        removeRaiderTab = QWidget()
+        layout = QVBoxLayout()
+        self.cb = QComboBox()
+        for x in roster:
+            self.cb.addItem(x.name)
+        layout.addWidget(self.cb)
+        removeRaiderTab.setLayout(layout)
+        return removeRaiderTab
+
+
 
 """
 GUI section
 """
 
-ui = tk.Tk()
-ui.geometry("2500x1400")
-ui.minsize(2500,1400)
-ui.maxsize(2500,1400)
-ui.title(' Continental Breakfast Cata Roster Tool ')
+app = QApplication(sys.argv)
 
-ui.columnconfigure((0,1,2,3,4,5,6,7), weight=3)
-ui.columnconfigure(8, weight=1)
-ui.rowconfigure((0,1,2,3,4,5,6,7,8,9,10,11,12,13), weight=1)
+ui = MainWindow()
+ui.show()
 
-tk.Label(ui, text='').grid(column=0,row=5)
+"""
+OLD UI SECTION
 
 groups=[]
 i=1
@@ -62,9 +136,9 @@ while i < 6:
                            ))
     groups[-1].grid(row=6, column = i, sticky='s')
     i+=1
-"""
+
 Raid positions
-"""
+
 pos=[]
 i=1
 while i < 6:
@@ -77,19 +151,21 @@ while i < 6:
     i+=1
       
 
-
-"""
 Draggables
-"""
+
 rlist = []
 raider=[]
 i=0    
+j=0
 j=0
 
 for x in r:
     raider.append(dm.dragManager(ui,
                         raider = x,
+    raider.append(dm.dragManager(ui,
+                        raider = x,
                         text=x.n + "; "+ x.s+" ("+x.a.r+")",
+                        color=x.a.c,
                         color=x.a.c,
                         height=2,
                         width=30,
@@ -101,9 +177,9 @@ for x in r:
         i=0
         j+=1
 
-"""
+
 Reset Button
-"""
+
 
 def resetPlayers():
     for x in raider:
@@ -122,9 +198,8 @@ reset_butt = tk.Button(text = "Reset",
 reset_butt.grid(row=1,column=8, sticky='new')
 
 
-"""
 Calculate Buffs
-"""
+
 def calculateBuffs(rlist):
     raidbuffs = pd.read_csv('raidbuffs.csv', names=['Buff'])
     availbuffs = []
@@ -144,14 +219,16 @@ calc_butt = tk.Button(text = "Calculate Buffs",
                   )
 calc_butt.grid(row=0, column=8, sticky='sew')
 
-"""
+
 Results Section
-"""
+
 m1 = tk.Label(text="Your raid is missing:\n"+calculateBuffs(rlist),
               font= ('Arial'))
 m1.grid(row=6, column=8, rowspan=7, sticky='e')
 
 ui.mainloop()
-    
+"""
+
+app.exec()
 
     
