@@ -4,9 +4,11 @@ Created on Thu May  2 15:10:33 2024
 
 @author: CoyneDa
 """
-import tkinter as tk
+from PyQt6.QtCore import QMimeData, Qt
+from PyQt6.QtGui import QDrag
+from PyQt6.QtWidgets import QApplication, QHBoxLayout, QPushButton, QWidget, QLabel
 
-class dragManager(tk.Label):
+class dragManager(QLabel):
     def __init__(self, master, raider, x, y, text, width, height, color, anchor="center"):
         super().__init__(master, text=text, width=width, height=height, bg=color, anchor=anchor)
         self.x0, self.y0 = x,y

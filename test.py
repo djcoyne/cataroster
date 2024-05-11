@@ -13,9 +13,7 @@ import pandas as pd
 import numpy as np
 import sys
 
-"""
-This reads in a CSV with the current roster on it
-"""
+#Read in the CSV with the current roster
 pl = pd.read_csv('cb_roster.csv').sort_values(by=['cl','spec','name']).reset_index()
 players=[]
 for index in pl.index:
@@ -31,16 +29,12 @@ for index in pl.index:
             players[index].add_character(name=pl['name'][index],cl=pl['cl'][index],spec=pl['spec'][index],role=pl['role'][index])
 
 
-"""
-This creates the list of mains
-"""
+# Create the list of Mains
 r = []
 for x in players:
     r.append(x.charlist[0])
 
-""" 
-Define MainWindow subclass
-"""
+#Define Main Window
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -58,13 +52,20 @@ class MainWindow(QMainWindow):
         central.setLayout(layout)
         self.setCentralWidget(central)
 
+#Create the Roster Tab
+
     def rosterTabUI(self):
         rosterTab = QWidget()
-        layout = QHBoxLayout()
-        layout.addWidget(QPushButton("Reset"))
-        rosterTab.setLayout(layout)
+        outerlayout = QHBoxLayout()
+        leftlayout = QVBoxLayout()
+        rightlayout = QVBoxLayout()
+        rightlayout.addWidget(QPushButton("Reset"))
+        outerlayout.addLayout(leftlayout)
+        outerlayout.addLayout(rightlayout)
+        rosterTab.setLayout(outerlayout)
         return rosterTab
-    
+
+ #Create the PA Management Tab   
     def addPATabUI(self, roster):
         PATab = QWidget()
         layout = QVBoxLayout()
@@ -74,7 +75,8 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.cb)
         PATab.setLayout(layout)
         return PATab
-    
+
+#Create the Raider Management Tab 
     def manageRaidersTabUI(self):
         manageRaidersTab = QWidget()
         layout = QVBoxLayout()
