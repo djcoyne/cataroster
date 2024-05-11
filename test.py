@@ -1,13 +1,7 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Apr 30 14:59:50 2024
-
-@author: CoyneDa
-"""
-
-from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QHBoxLayout, QVBoxLayout, QFormLayout, QTabWidget, QWidget, QComboBox, QLineEdit, QLabel
-import dragManager as dm
+from PyQt6.QtCore import QMimeData, QSize, Qt
+from PyQt6.QtGui import QDrag, QMouseEvent
+from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QHBoxLayout, QVBoxLayout, QFormLayout 
+from PyQt6.QtWidgets import QTabWidget, QGridLayout, QWidget, QComboBox, QLineEdit, QLabel
 import players as p
 import pandas as pd
 import numpy as np
@@ -33,6 +27,9 @@ r = []
 for x in players:
     r.append(x.charlist[0])
 
+# Define the list of Raiders for the Active Roster
+raider=[]
+
 # Reset Button function
 
 def resetPlayers():
@@ -53,6 +50,31 @@ def calculateBuffs(rlist):
     missbuffs = pd.concat([raidbuffs,pd.DataFrame(availbuffs, columns=['Buff'])]).drop_duplicates(keep=False)
     return missbuffs
 
+
+# Define draggable elements class
+class Draggable(QLabel):
+    def __init__(self, raider, x, y, text, width, height):
+        super().__init__(text=text, width=width, height=height)
+        self.x0, self.y0 = x,y
+        self.raider = raider
+        colorstyle = "QLabel{color:%s; background-color:%s}" % (
+                    'black',
+                    self.raider.a.c,
+                    )
+        self.setStyleSheet(colorstyle)
+
+    def dragStart(self,e):
+        if e.buttons() == Qt.LeftButton:
+            drag = QDrag(self)
+            mime = QMimeData
+            drag.setMimeData(mime)
+            drag.exec_(Qt.MoveAction)
+
+
+
+"""
+GUI section
+"""
 #Define Main Window
 
 class MainWindow(QMainWindow):
@@ -60,7 +82,9 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("CB Cata Roster Tool")
-
+        minw = 1000
+        minh = 500
+        self.setMinimumSize(minw, minh)
         layout = QHBoxLayout()
         
         tabs = QTabWidget()
@@ -75,17 +99,33 @@ class MainWindow(QMainWindow):
 #Create the Roster Tab
 
     def rosterTabUI(self):
+        self.setAcceptDrops(True)
         rosterTab = QWidget()
         outerlayout = QHBoxLayout()
-        leftlayout = QVBoxLayout()
+        leftlayout = QGridLayout()
+        leftlayout.setVerticalSpacing(3)
+        leftlayout.setHorizontalSpacing(3)
+        i = 0
+        j = 0
+        for x in r:
+            leftlayout.addWidget(Draggable(x,i,j,text=x.n + "; "+ x.s+" ("+x.a.r+")", width=30, height=2))
+            i+=1
+            if i % 5 == 0:
+                i=0
+                j+=1
+        outerlayout.addLayout(leftlayout)
         rightlayout = QVBoxLayout()
         rightlayout.addWidget(QPushButton("Reset"))
-        outerlayout.addLayout(leftlayout)
         outerlayout.addLayout(rightlayout)
         rosterTab.setLayout(outerlayout)
+
+        def dragEnterEvent(self, e):
+            e.accept()
+
         return rosterTab
 
  #Create the PA Management Tab   
+
     def addPATabUI(self, roster):
         PATab = QWidget()
         layout = QVBoxLayout()
@@ -97,6 +137,7 @@ class MainWindow(QMainWindow):
         return PATab
 
 #Create the Raider Management Tab 
+
     def manageRaidersTabUI(self):
         manageRaidersTab = QWidget()
         layout = QVBoxLayout()
@@ -136,14 +177,9 @@ class MainWindow(QMainWindow):
         removeRaiderTab.setLayout(layout)
         return removeRaiderTab
 
-
-
-"""
-GUI section
-"""
-
+# Initialize and run the app   
+ 
 app = QApplication(sys.argv)
-
 ui = MainWindow()
 ui.show()
 app.exec()
