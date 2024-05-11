@@ -4,24 +4,45 @@ Created on Thu May  2 15:10:33 2024
 
 @author: CoyneDa
 """
+import tkinter as tk
 
-class DragManager():
-    def add_draggable(self, widget):
-        widget.bind("<ButtonPress-1>", self.on_start)
-        widget.bind("<B1-Motion>", self.on_drag)
-        widget.bind("<ButtonRelease-1>", self.on_drop)
-        widget.configure(cursor="hand1")
+class dragManager(tk.Label):
+    def __init__(self, master, raider, x, y, text, width, height, color, anchor="center"):
+        super().__init__(master, text=text, width=width, height=height, bg=color, anchor=anchor)
+        self.x0, self.y0 = x,y
+        self.raider = raider
+        self.bind("<Button-1>", self.on_drag_start)
+        self.bind("<B1-Motion>", self.on_drag_move)
+        self.bind("<ButtonRelease-1>", self.on_drag_end)
+        self.configure(cursor="hand1")
 
-    def on_start(self, event):
-        # you could use this method to create a floating window
-        # that represents what is being dragged.
-        pass
+    def on_drag_start(self, event):
+        self.xstart = event.x
+        self.ystart = event.y
 
-    def on_drag(self, event):
-        x = event.x + event.widget.winfo_x()
-        y = event.y + event.widget.winfo_y()
-        event.widget.place(x=x, y=y, anchor="center")
+    def on_drag_move(self, event):
+        widget=event.widget
+        self.x = widget.winfo_x() + event.x
+        self.y = widget.winfo_y() + event.y
+        self.lift()
+        self.place(x=self.x,y=self.y, anchor="center")
 
-    def on_drop(self, event):
-        # find the widget under the cursor
-        x,y = event.widget.winfo_pointerxy()
+    def on_drag_end(self, event):
+        widget=event.widget
+        self.x = widget.winfo_pointerx() - self.xstart + event.x
+        self.y = widget.winfo_pointery() - self.ystart + event.y
+        curx = widget.winfo_pointerx()
+        cury = widget.winfo_pointery()
+        print(curx, cury)
+        if 300 < curx < 1800 & 700 < cury < 1300:
+            i = curx//300
+            print(i)
+            j = cury//100
+            print(j)
+            widget.grid(row=j, column=i, sticky='nsew', padx=3, pady=3)
+        else:
+            widget.grid(row=self.x0,column=self.y0, sticky='nsew', padx=3, pady=3)
+            
+    def reset(self):
+        self.grid(row=self.x0,column=self.y0, sticky='nsew', padx=3, pady=3 )
+        

@@ -157,11 +157,15 @@ rlist = []
 raider=[]
 i=0    
 j=0
+j=0
 
 for x in r:
     raider.append(dm.dragManager(ui,
                         raider = x,
+    raider.append(dm.dragManager(ui,
+                        raider = x,
                         text=x.n + "; "+ x.s+" ("+x.a.r+")",
+                        color=x.a.c,
                         color=x.a.c,
                         height=2,
                         width=30,
