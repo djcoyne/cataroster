@@ -5,105 +5,226 @@ Created on Tue Apr 30 14:59:50 2024
 @author: CoyneDa
 """
 
-import tkinter as tk
+from PyQt6.QtCore import QSize, Qt
+from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QHBoxLayout, QVBoxLayout, QFormLayout, QTabWidget, QWidget, QComboBox, QLineEdit, QLabel
 import dragManager as dm
 import players as p
 import pandas as pd
+import numpy as np
+import sys
 
-roster=pd.DataFrame(columns=['Name','Role','Class','Spec'])
-raidbuffs = pd.read_csv('raidbuffs.csv', names=['Buff'])
+"""
+This reads in a CSV with the current roster on it
+"""
+pl = pd.read_csv('cb_roster.csv').sort_values(by=['cl','spec','name']).reset_index()
+players=[]
+for index in pl.index:
+    players.append(p.Player(pl['player'][index]))
+    if pl['role'][index]==np.nan:
+       players[index].add_character(name=pl['name'][index],cl=pl['cl'][index],spec=pl['spec'][index])
+    else:
+        players[index].add_character(name=pl['name'][index],cl=pl['cl'][index],spec=pl['spec'][index],role=pl['role'][index])
+    if pl['altname'][index]!=np.nan:
+        if pl['altrole'][index]==np.nan:
+           players[index].add_character(name=pl['name'][index],cl=pl['cl'][index],spec=pl['spec'][index])
+        else:
+            players[index].add_character(name=pl['name'][index],cl=pl['cl'][index],spec=pl['spec'][index],role=pl['role'][index])
 
-playerlist = []
-Raph = p.Player('Raph')
-Dave = p.Player('Dave')
-Alan = p.Player('Alan')
-Tara = p.Player('Tara')
-Chelsea = p.Player('Chelsea')
 
-Raph.add_character('Thurdead','Death Knight','Blood', role='tank')
-Dave.add_character('Gwendolock','Warlock','Affliction')
-Dave.add_character('Gwenance','Priest','Discipline')
-Alan.add_character('Knotadellon','Druid','Restoration')
-Tara.add_character('Maureensy','Warlock','Destruction')
-Chelsea.add_character('Kittn','Shaman','Elemental')
-
-
-
+"""
+This creates the list of mains
+"""
 r = []
-r.append(Raph.charlist[0])
-r.append(Dave.charlist[0])
-r.append(Alan.charlist[0])
-r.append(Tara.charlist[0])
-r.append(Chelsea.charlist[0])
+for x in players:
+    r.append(x.charlist[0])
 
-playerlist.append(Raph)
-playerlist.append(Dave)
-playerlist.append(Alan)
-playerlist.append(Tara)
-playerlist.append(Chelsea)
+""" 
+Define MainWindow subclass
+"""
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("CB Cata Roster Tool")
+
+        layout = QHBoxLayout()
+        
+        tabs = QTabWidget()
+        tabs.addTab(self.rosterTabUI(), "Roster")
+        tabs.addTab(self.addPATabUI(players), "Add PA")
+        tabs.addTab(self.manageRaidersTabUI(), "Manage Raiders")
+        layout.addWidget(tabs)
+        central = QWidget()
+        central.setLayout(layout)
+        self.setCentralWidget(central)
+
+    def rosterTabUI(self):
+        rosterTab = QWidget()
+        layout = QHBoxLayout()
+        layout.addWidget(QPushButton("Reset"))
+        rosterTab.setLayout(layout)
+        return rosterTab
+    
+    def addPATabUI(self, roster):
+        PATab = QWidget()
+        layout = QVBoxLayout()
+        self.cb = QComboBox()
+        for x in roster:
+            self.cb.addItem(x.name)
+        layout.addWidget(self.cb)
+        PATab.setLayout(layout)
+        return PATab
+    
+    def manageRaidersTabUI(self):
+        manageRaidersTab = QWidget()
+        layout = QVBoxLayout()
+        tabs = QTabWidget()
+        tabs.addTab(self.addRaider(), "Add Raider")
+        tabs.addTab(self.editRaider(), "Edit Raider")
+        tabs.addTab(self.removeRaider(players), "Remove Raider")
+        layout.addWidget(tabs)
+        manageRaidersTab.setLayout(layout)
+        return manageRaidersTab
+
+    def addRaider(self):
+        addRaiderTab = QWidget()
+        layout = QFormLayout()
+        layout.addRow(QLabel("Name: "), QLineEdit())
+        layout.addRow(QLabel("Class: "), QLineEdit())
+        layout.addRow(QLabel("Spec: "), QLineEdit())
+        addRaiderTab.setLayout(layout)
+        return addRaiderTab
+        
+    def editRaider(self):
+        editRaiderTab = QWidget()
+        layout = QFormLayout()
+        layout.addRow(("Name: "), QLineEdit())
+        layout.addRow(("Class: "), QLineEdit())
+        layout.addRow(("Spec: "), QLineEdit())
+        editRaiderTab.setLayout(layout)
+        return editRaiderTab
+        
+    def removeRaider(self, roster):
+        removeRaiderTab = QWidget()
+        layout = QVBoxLayout()
+        self.cb = QComboBox()
+        for x in roster:
+            self.cb.addItem(x.name)
+        layout.addWidget(self.cb)
+        removeRaiderTab.setLayout(layout)
+        return removeRaiderTab
 
 
-availbuffs = []
-rosterlist = []
-for x in r:
-    roster.loc[len(roster.index)] =[x.n, x.a.r, x.c, x.s]
-    availbuffs.extend(x.a.buffs)
-    rosterlist.append(x.n) 
-
-availbuffs = set(availbuffs)
-missbuffs = pd.concat([raidbuffs,pd.DataFrame(availbuffs, columns=['Buff'])]).drop_duplicates(keep=False)
 
 """
 GUI section
 """
 
-ui = tk.Tk()
-ui.state('zoomed')
-ui.configure(bg='gray')
-ui.title(' Continental Breakfast Cata Roster Tool ')
+app = QApplication(sys.argv)
+
+ui = MainWindow()
+ui.show()
 
 """
+OLD UI SECTION
+
+groups=[]
+i=1
+while i < 6:
+    groups.append(tk.Label(ui,
+                           text = "Group " + str(i)
+                           ))
+    groups[-1].grid(row=6, column = i, sticky='s')
+    i+=1
+
+Raid positions
+
+pos=[]
+i=1
+while i < 6:
+    j=8
+    while j < 13:
+      pos.append(tk.Frame(ui,
+                          bg='gray'
+                          ).grid(row=j, column=i,sticky='nsew', padx=3, pady=3 ))
+      j+=1
+    i+=1
+      
+
 Draggables
-"""
+
+rlist = []
 raider=[]
-dnd=[]
 i=0    
+j=0
 
 for x in r:
-    raider.append(tk.Label(ui,
+    raider.append(dm.dragManager(ui,
+                        raider = x,
                         text=x.n + "; "+ x.s+" ("+x.a.r+")",
-                        bg=x.a.c,
+                        color=x.a.c,
                         height=2,
-                        width=30
-                        ))
-    raider[-1].place(x=200, y = 20+4*i,anchor="center")
-    dnd.append(dm.DragManager())
-    dnd[-1].add_draggable(raider[-1])
-    i+=10
-    
-"""
-Reset Button
-"""
+                        width=30,
+                        x=i,
+                        y=j))
+    raider[-1].grid(row=i, column=j, sticky='nsew', padx=3, pady=3)
+    i+=1
+    if i % 5==0:
+        i=0
+        j+=1
 
-button = tk.Button(
-    text = "Reset",
+
+Reset Button
+
+
+def resetPlayers():
+    for x in raider:
+        x.reset()
+    rlist=[]
+    calculateBuffs(rlist)
+
+reset_butt = tk.Button(text = "Reset",
     width=7,
     height=2,
     bg='red',
     fg='black',
+    command = resetPlayers
     )
-button.pack()
 
-"""
+reset_butt.grid(row=1,column=8, sticky='new')
+
+
+Calculate Buffs
+
+def calculateBuffs(rlist):
+    raidbuffs = pd.read_csv('raidbuffs.csv', names=['Buff'])
+    availbuffs = []
+    for x in rlist:
+        availbuffs.extend(x.a.buffs)
+
+    availbuffs = set(availbuffs)
+    missbuffs = pd.concat([raidbuffs,pd.DataFrame(availbuffs, columns=['Buff'])]).drop_duplicates(keep=False)
+    return missbuffs.to_string(index=False, header=False)
+
+calc_butt = tk.Button(text = "Calculate Buffs",
+                  width=7,
+                  height=2,
+                  bg='green',
+                  fg='black',
+                  command = calculateBuffs(rlist)
+                  )
+calc_butt.grid(row=0, column=8, sticky='sew')
+
+
 Results Section
-"""
 
-m1 = tk.Label(text="Your raid is missing:")
-m2 = tk.Label(text=missbuffs.to_string(index=False, header=False))                           
-m1.pack()
-m2.pack()
+m1 = tk.Label(text="Your raid is missing:\n"+calculateBuffs(rlist),
+              font= ('Arial'))
+m1.grid(row=6, column=8, rowspan=7, sticky='e')
 
 ui.mainloop()
-    
+"""
+
+app.exec()
 
     
