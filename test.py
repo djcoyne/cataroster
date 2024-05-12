@@ -67,25 +67,20 @@ class Draggable(QLabel):
 
     def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
-            self.drag_start_position = event.pos()
-    
-    def mouseMoveEvent(self, event):
-        if not (event.buttons() & Qt.MouseButton.LeftButton):
-            return
-        if (event.pos() - self.drag_start_position).manhattanLength() < QApplication.startDragDistance():
-            return
-        drag = QDrag(self)
-        mimedata = QMimeData()
-        mimedata.setText(self.text())
-        mimedata.setColorData(self.colorstyle)
-        drag.setMimeData(mimedata)
-        pixmap = QPixmap(self.size())
-        painter = QPainter(pixmap)
-        painter.drawPixmap(self.rect(), self.grab())
-        painter.end()
-        drag.setPixmap(pixmap)
-        drag.setHotSpot(event.pos())
-        drag.exec(Qt.DropAction.MoveAction)
+            drag = QDrag(self)
+            mimedata = QMimeData()
+            mimedata.setText(self.text())
+            pixmap = QPixmap(self.size())
+            painter = QPainter(pixmap)
+            painter.drawPixmap(self.rect(), self.grab())
+            painter.end()
+            drag.setPixmap(pixmap)
+            drag.setHotSpot(event.pos())
+            drag.setMimeData(mimedata)
+            drag.setHotSpot(event.position().toPoint())
+            drag.exec(Qt.DropAction.MoveAction)
+            self.drag_start_position = event.pos()    
+        
 
 class DropLabel(QLabel):
     def __init__(self, *args, **kwargs):
@@ -93,13 +88,22 @@ class DropLabel(QLabel):
         self.setAcceptDrops(True)
 
     def dragEnterEvent(self, event):
-        event.acceptProposedAction()
+        if event.mimeData().hasText():
+            event.accept()
+        else:
+            event.ignore()
 
     def dropEvent(self, event):
-        pos = event.position()
-        text = event.mimeData().text()
-        self.setText(text)
-        event.acceptProposedAction()
+        if event.mimeData().hasText():
+            text = event.mimeData().text()
+            self.setText(text)
+            event.setDropAction(Qt.DropAction.MoveAction)
+            event.accept()
+            drag_color = event.source().palette().color(event.source().backgroundRole())
+            self.setStyleSheet(f"background-color: {drag_color.name()};")
+            self.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        else:
+            event.ignore()
 
 
 
@@ -113,8 +117,8 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("CB Cata Roster Tool")
-        minw = 1200
-        minh = 700
+        minw = 1500
+        minh = 800
         self.setMinimumSize(minw, minh)
         layout = QHBoxLayout()
         
