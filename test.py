@@ -1,5 +1,5 @@
 from PyQt6.QtCore import QMimeData, QSize, Qt
-from PyQt6.QtGui import QDrag, QMouseEvent
+from PyQt6.QtGui import QDrag, QPixmap, QPainter, QCursor
 from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QHBoxLayout, QVBoxLayout, QFormLayout 
 from PyQt6.QtWidgets import QTabWidget, QGridLayout, QWidget, QComboBox, QLineEdit, QLabel
 import players as p
@@ -53,22 +53,53 @@ def calculateBuffs(rlist):
 
 # Define draggable elements class
 class Draggable(QLabel):
-    def __init__(self, raider, x, y, text, width, height):
-        super().__init__(text=text, width=width, height=height)
+    def __init__(self, raider, x, y, text):
+        super().__init__(text=text)
+        self.setAcceptDrops(True)
         self.x0, self.y0 = x,y
         self.raider = raider
-        colorstyle = "QLabel{color:%s; background-color:%s}" % (
+        self.colorstyle = "QLabel{color:%s; background-color:%s;}" % (
                     'black',
                     self.raider.a.c,
                     )
-        self.setStyleSheet(colorstyle)
+        self.setStyleSheet(self.colorstyle)
+        self.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-    def dragStart(self,e):
-        if e.buttons() == Qt.LeftButton:
-            drag = QDrag(self)
-            mime = QMimeData
-            drag.setMimeData(mime)
-            drag.exec_(Qt.MoveAction)
+    def mousePressEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            self.drag_start_position = event.pos()
+    
+    def mouseMoveEvent(self, event):
+        if not (event.buttons() & Qt.MouseButton.LeftButton):
+            return
+        if (event.pos() - self.drag_start_position).manhattanLength() < QApplication.startDragDistance():
+            return
+        drag = QDrag(self)
+        mimedata = QMimeData()
+        mimedata.setText(self.text())
+        mimedata.setColorData(self.colorstyle)
+        drag.setMimeData(mimedata)
+        pixmap = QPixmap(self.size())
+        painter = QPainter(pixmap)
+        painter.drawPixmap(self.rect(), self.grab())
+        painter.end()
+        drag.setPixmap(pixmap)
+        drag.setHotSpot(event.pos())
+        drag.exec(Qt.DropAction.MoveAction)
+
+class DropLabel(QLabel):
+    def __init__(self, *args, **kwargs):
+        QLabel.__init__(self, *args, **kwargs)
+        self.setAcceptDrops(True)
+
+    def dragEnterEvent(self, event):
+        event.acceptProposedAction()
+
+    def dropEvent(self, event):
+        pos = event.position()
+        text = event.mimeData().text()
+        self.setText(text)
+        event.acceptProposedAction()
 
 
 
@@ -82,8 +113,8 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("CB Cata Roster Tool")
-        minw = 1000
-        minh = 500
+        minw = 1200
+        minh = 700
         self.setMinimumSize(minw, minh)
         layout = QHBoxLayout()
         
@@ -99,29 +130,35 @@ class MainWindow(QMainWindow):
 #Create the Roster Tab
 
     def rosterTabUI(self):
-        self.setAcceptDrops(True)
         rosterTab = QWidget()
         outerlayout = QHBoxLayout()
-        leftlayout = QGridLayout()
-        leftlayout.setVerticalSpacing(3)
-        leftlayout.setHorizontalSpacing(3)
+        leftlayout = QVBoxLayout()
+        gridlayout = QGridLayout()
+        gridlayout.setVerticalSpacing(3)
+        gridlayout.setHorizontalSpacing(3)
         i = 0
         j = 0
         for x in r:
-            leftlayout.addWidget(Draggable(x,i,j,text=x.n + "; "+ x.s+" ("+x.a.r+")", width=30, height=2))
+            gridlayout.addWidget(Draggable(x,i,j,text=x.n + "; "+ x.s+" ("+x.a.r+")"),i,j)
             i+=1
             if i % 5 == 0:
                 i=0
                 j+=1
+        rosterslots = QGridLayout()
+        rosterslots.setVerticalSpacing(3)
+        rosterslots.setHorizontalSpacing(3)
+        for i in range(5):
+            for j in range(5):
+                label = DropLabel()
+                label.setStyleSheet('background-color: gray;')
+                rosterslots.addWidget(label,i,j)
+        leftlayout.addLayout(gridlayout)
+        leftlayout.addLayout(rosterslots)
         outerlayout.addLayout(leftlayout)
         rightlayout = QVBoxLayout()
         rightlayout.addWidget(QPushButton("Reset"))
         outerlayout.addLayout(rightlayout)
         rosterTab.setLayout(outerlayout)
-
-        def dragEnterEvent(self, e):
-            e.accept()
-
         return rosterTab
 
  #Create the PA Management Tab   
