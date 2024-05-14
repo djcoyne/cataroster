@@ -28,25 +28,50 @@ for x in players:
     r.append(x.charlist[0])
 
 # Define the list of Raiders for the Active Roster
-global raidlist
 raidlist = []
 
 # Calculate Buffs function
-def calculateBuffs(rlist):
+mbuffs=[]
+def calculateBuffs():
     raidbuffs = pd.read_csv('raidbuffs.csv', names=['Buff'])
     availbuffs = []
-    for x in rlist:
+    global raidlist
+    for x in raidlist:
         availbuffs.extend(x.a.buffs)
 
     availbuffs = set(availbuffs)
-    missbuffs = pd.concat([raidbuffs,pd.DataFrame(availbuffs, columns=['Buff'])]).drop_duplicates(keep=False).values.tolist()   
-    return missbuffs
-global mbuffs
-mbuffs = calculateBuffs(raidlist)
+    global mbuffs
+    mbuffs = pd.concat([raidbuffs,pd.DataFrame(availbuffs, columns=['Buff'])]).drop_duplicates(keep=False).values.tolist()
+calculateBuffs()
 
 # Reset function
-def restart():
-    app.exec()
+def restart(gridlayout, rosterslots, missingbuffs):
+    global mbuffs
+    mbuffs=[]
+    global raidlist
+    raidlist=[]
+    
+    i = 0
+    j = 0
+    for x in r:
+        gridlayout.addWidget(Draggable(x,i,j,text=x.n + "; "+ x.s+" ("+x.a.r+")"),i,j)
+        i+=1
+        if i % 6 == 0:
+            i=0
+            j+=1
+    
+    missingbuffs.clear()
+    calculateBuffs()
+    for x in mbuffs:
+        missingbuffs.addItems(x)
+    missingbuffs.update()
+    
+    for i in range(5):
+        for j in range(5):
+            label = DropLabel(mbwid=missingbuffs)
+            label.setStyleSheet('background-color: gray;')
+            rosterslots.addWidget(label,i,j)
+    
 
 # Define draggable elements class
 class Draggable(QLabel):
@@ -99,9 +124,16 @@ class DropLabel(Draggable):
             drag_color = event.source().palette().color(event.source().backgroundRole())
             self.setStyleSheet(f"background-color: {drag_color.name()};")
             self.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            global raidlist
             raidlist.append(self.raider)
-            event.source().hide()
-            mbuffs = calculateBuffs(raidlist)
+            event.source().setText("")
+            event.source().setStyleSheet(f"background-color: gray;")
+            calculateBuffs()
+            global mbuffs
+            self.mbwid.clear()
+            for x in mbuffs:
+                self.mbwid.addItems(x)
+            self.mbwid.update()
         else:
             event.ignore()
 
@@ -173,8 +205,11 @@ class MainWindow(QMainWindow):
         outerlayout.addLayout(leftlayout, stretch=4)
         rightlayout = QVBoxLayout()
         resetbutton = QPushButton("Reset")
-        resetbutton.clicked.connect(restart)
+        resetbutton.clicked.connect(lambda: restart(gridlayout, rosterslots, missingbuffs))
         rightlayout.addWidget(resetbutton)
+        mblabel = QLabel()
+        mblabel.setText("Missing Buffs:")
+        rightlayout.addWidget(mblabel)
         rightlayout.addWidget(missingbuffs)
         outerlayout.addLayout(rightlayout, stretch=1)
         rosterTab.setLayout(outerlayout)
